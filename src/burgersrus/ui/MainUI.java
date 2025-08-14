@@ -16,8 +16,29 @@ public class MainUI extends javax.swing.JFrame {
     /**
      * Creates new form MainUI
      */
+    
+    // Models
+    private burgersrus.model.Burger currentBurger = new burgersrus.model.Burger();
+    
     public MainUI() {
         initComponents();
+        
+         // group radios so only one is selected
+         javax.swing.ButtonGroup group = new javax.swing.ButtonGroup();
+         group.add(rbSingleBurger);
+         group.add(rbDoubleBurger);
+         
+         rbSingleBurger.setSelected(true);  //Default Single
+         getOrderQuantity.setText("1");     //Default Quantity
+        
+         // Default Fields
+         currentBurger.setType("Single");
+         currentBurger.setQuantity(1);
+         currentBurger.setCheese(false);
+         currentBurger.setBacon(false);
+         currentBurger.setMeal(false);
+         
+         updateItemPriceField();
     }
 
     /**
@@ -30,11 +51,11 @@ public class MainUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        rbDoubleBurger = new javax.swing.JRadioButton();
+        rbSingleBurger = new javax.swing.JRadioButton();
+        cbAddCheese = new javax.swing.JCheckBox();
+        cbAddBacon = new javax.swing.JCheckBox();
+        cbMakeAMeal = new javax.swing.JCheckBox();
         lblAddOns = new javax.swing.JLabel();
         setItemPrice = new javax.swing.JTextField();
         getOrderQuantity = new javax.swing.JTextField();
@@ -50,12 +71,22 @@ public class MainUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jRadioButton2.setText("jRadioButton2");
+        rbDoubleBurger.setText("Double");
+        rbDoubleBurger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbDoubleBurgerActionPerformed(evt);
+            }
+        });
 
-        jRadioButton1.setText("jRadioButton1");
+        rbSingleBurger.setText("Single");
+        rbSingleBurger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbSingleBurgerActionPerformed(evt);
+            }
+        });
 
-        jDesktopPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jRadioButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(rbDoubleBurger, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(rbSingleBurger, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -64,25 +95,25 @@ public class MainUI extends javax.swing.JFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
+                    .addComponent(rbDoubleBurger)
+                    .addComponent(rbSingleBurger))
                 .addContainerGap())
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addComponent(rbSingleBurger)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(rbDoubleBurger)
                 .addContainerGap())
         );
 
-        jCheckBox1.setText("jCheckBox1");
+        cbAddCheese.setText("Add Cheese");
 
-        jCheckBox2.setText("jCheckBox2");
+        cbAddBacon.setText("Add Bacon");
 
-        jCheckBox3.setText("jCheckBox3");
+        cbMakeAMeal.setText("Make it a Meal");
 
         lblAddOns.setText("Add Ons:");
 
@@ -127,22 +158,21 @@ public class MainUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbAddBacon, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(cbAddCheese, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbMakeAMeal, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblItemPrice)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(setItemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(lblAddOns)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(118, 118, 118)
+                        .addGap(118, 157, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblItemPrice)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(setItemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblOrderTotal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -152,7 +182,7 @@ public class MainUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(getOrderQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
+                        .addGap(86, 88, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(98, 98, 98))
         );
@@ -166,23 +196,26 @@ public class MainUI extends javax.swing.JFrame {
                         .addGap(25, 25, 25)
                         .addComponent(lblAddOns)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1))
+                        .addComponent(cbAddCheese))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
+                .addComponent(cbAddBacon)
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox3)
+                    .addComponent(cbMakeAMeal)
                     .addComponent(getOrderQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblOrderQuantity))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(setItemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblItemPrice))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(setOrderTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOrderTotal))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(setOrderTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblOrderTotal)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(setItemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblItemPrice))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
@@ -234,6 +267,21 @@ public class MainUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_getOrderQuantityActionPerformed
 
+    private void rbSingleBurgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbSingleBurgerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbSingleBurgerActionPerformed
+
+    private void rbDoubleBurgerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbDoubleBurgerActionPerformed
+        updateItemPriceField();
+    }//GEN-LAST:event_rbDoubleBurgerActionPerformed
+    
+    private void updateItemPriceField() {
+        // calculate price of one item only
+        String price = new java.text.DecimalFormat("0.00")
+            .format(currentBurger.calculateItemCost());
+        setItemPrice.setText(price);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -262,19 +310,19 @@ public class MainUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuFile;
     private javax.swing.JMenu MenuOrder;
+    private javax.swing.JCheckBox cbAddBacon;
+    private javax.swing.JCheckBox cbAddCheese;
+    private javax.swing.JCheckBox cbMakeAMeal;
     private javax.swing.JTextField getOrderQuantity;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddOns;
     private javax.swing.JLabel lblItemPrice;
     private javax.swing.JLabel lblOrderQuantity;
     private javax.swing.JLabel lblOrderTotal;
+    private javax.swing.JRadioButton rbDoubleBurger;
+    private javax.swing.JRadioButton rbSingleBurger;
     private javax.swing.JTextField setItemPrice;
     private javax.swing.JTextField setOrderTotal;
     private javax.swing.JTextArea txtDisplayReceipt;
